@@ -16,6 +16,7 @@ h1, h2, h3 {
   grid-template-columns: 1fr 2fr;
   grid-auto-rows: 40px;
   align-items: center;
+  grid-column-end: span 2;
 }
 .promo h3 {
   grid-row-start: 1;
@@ -28,4 +29,11 @@ h1, h2, h3 {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 30px 50px;
 }
