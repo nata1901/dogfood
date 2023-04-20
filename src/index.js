@@ -1,5 +1,6 @@
 import React, { createElement } from "react";
 import ReactDom from "react-dom/client";
+import App from "./App";
 import "./index.css";
 
 const root = ReactDom.createRoot(document.getElementById("root"));
@@ -21,15 +22,7 @@ const root = ReactDom.createRoot(document.getElementById("root"));
 // )
 
 root.render(
-  <div title="Doggy">
-    <h1>Hello!</h1>
-    <hr />
-    <i>i</i>
-    <i/>
-    <h2>
-      <mark>React</mark>
-    </h2>
-  </div>
+ <App/>
 )
 
 // JSX - html с движком JS
