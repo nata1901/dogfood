@@ -1,5 +1,6 @@
 import Promo from "./components/Promo/Promo"; //Promo.jsx
 import Card from "./components/Card"; //index.jsx
+import {Header, Footer} from "./components/General";
 import cardsData from "./assets/data" //data.json
 
 
@@ -22,7 +23,9 @@ while (n--) {
 }
 
 const App = () => {
+    const user = localStorage.getItem("rockUser")
     return <div>
+        <Header user={user}/>
             <div className="container">
            {/* <Card 
                  img={cardsData[0].pictures}
@@ -37,6 +40,7 @@ const App = () => {
                  />)}
                 {adds.map((el, i) => <Promo key={i} {...el} type={el.sizes}/>)}
             </div>
+            <Footer/>
         </div>
 }
 
