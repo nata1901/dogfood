@@ -2,6 +2,7 @@ import { useState } from "react";
 import Promo from "./components/Promo/Promo"; //Promo.jsx
 import Card from "./components/Card"; //index.jsx
 import {Header, Footer} from "./components/General";
+import Modal from "./components/Modal";
 import cardsData from "./assets/data" //data.json
 
 import Search from "./components/Search";
@@ -28,7 +29,8 @@ while (n--) {
 const App = () => {
     const [goods, setGoods] = useState(cardsData);
     const [user, setUser] = useState(localStorage.getItem("rockUser"));
-    return <div>
+    return (
+    <>
         <Header user={user} setUser={setUser}/>
             <div className="container">
            {/* <Card 
@@ -46,7 +48,9 @@ const App = () => {
                 {adds.map((el, i) => <Promo key={i} {...el} type={el.sizes}/>)}
             </div>
             <Footer/>
-        </div>
+            <Modal/>
+        </>
+    )
 }
 
 export default App;
