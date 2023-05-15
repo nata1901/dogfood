@@ -21,3 +21,7 @@ header {
     display: flex;
     gap: 20px;
 }
+.footer__menu {
+    display: flex;
+    gap: 20px;
+}

@@ -13,6 +13,9 @@ const navigate = useNavigate();
         setUser(""); 
         // setUser() => setUser(null)
         localStorage.removeItem("rockUser");
+        localStorage.removeItem("rockToken");
+        
+        localStorage.removeItem("rockId");
         navigate("/");
         //useNavigate()("/") замыкание
     }

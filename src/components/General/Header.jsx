@@ -1,14 +1,15 @@
 import Logo from "./Logo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Folder2, Star, Cart4, PersonSquare, BoxArrowInRight } from "react-bootstrap-icons";
 
 const Header = ({user, setModalActive}) => {
-    
+    const navigate = useNavigate()
     const logIn = (e) => {
         e.preventDefault();
         // setUser("lk-band");
         // localStorage.setItem("rockUser", "lk-band");
         setModalActive(true);
+        navigate("/profile")
     }
     return <header>
         <Logo/>
