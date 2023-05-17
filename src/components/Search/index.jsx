@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./style.css";
 
@@ -12,6 +12,16 @@ const Search = ({arr, upd}) => {
 		Единственный аргумент useState - значение по умолчанию
 	*/
 const [count, updateCount] = useState(0);
+useEffect(() => {
+	if (text) {
+		let result = arr.filter(el => new RegExp(text, "i").test(el.name))
+		upd(result);
+		setQuantity(result.length);
+	} else {
+		upd(arr);
+		setQuantity(arr.length);
+	}
+}, [arr]);
 
     let n = 1;
     const click = () => {
