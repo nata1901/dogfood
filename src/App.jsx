@@ -56,6 +56,9 @@ import Favorites from "./pages/Favorites";
 
 
 const App = () => {
+    // let key = "3c35962d0dfc45689ece68af88f0bba7"
+    "https://newsapi.org/v2/everything?apiKey=3c35962d0dfc45689ece68af88f0bba7&q=dogs"
+
     const [user, setUser] = useState(localStorage.getItem("rockUser"));
     const [token, setToken] = useState(localStorage.getItem("rockToken"));
     const [userId, setUserId] = useState(localStorage.getItem("rockId"));
@@ -63,7 +66,17 @@ const App = () => {
     const [serverGoods, setServerGoods] = useState([]);
 //    Товары для поиска и фильтрации
 const [goods, setGoods] = useState(serverGoods);
-    
+//получаем новости
+const [news, setNews] = useState([]);
+useEffect(() => {
+    fetch("https://newsapi.org/v2/everything?q=животные&sources=lenta&apiKey=3c35962d0dfc45689ece68af88f0bba7")
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            setNews(data.articles)
+        })
+}, [])
+     
     const [modalActive, setModalActive] = useState(false);
 
     // useEffect - срабатыват каждый раз, когда компонент создался или перерисовался
@@ -108,7 +121,8 @@ useEffect(() => {
 
 const ctxVal = {
     goods,
-    setGoods
+    setGoods,
+    news
 }
     return (
          // value - объект с данными контекста

@@ -1,6 +1,9 @@
+import News from "../components/News";
+
 const Main = () => {
     return <>
-    <h1>Главная страница</h1>
+        <News/>
+        <h1>Главная страница</h1>
     </>
 }
 
