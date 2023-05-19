@@ -20,6 +20,21 @@ UserName и userId в LS можно и не хранить - можно прин
 import {useState, useEffect} from "react";
 import {Routes, Route} from "react-router-dom";
 
+// Подключаем контекст
+import Ctx from "./context";
+
+/*
+    <Ctx.Provider>
+        <CtxUser.Provider>
+            <Header/>
+            <Modal/>
+        </CtxUser.Provider>
+        <Component3/>
+        <Component4/>
+        <Component5/>
+    </Ctx.Provider>
+*/
+
 // компоненты (кусочки кода, которые используются многократно)
 import {Header, Footer} from "./components/General";
 import Modal from "./components/Modal";
@@ -91,25 +106,40 @@ useEffect(() => {
     console.log("u", user);
 }, [user]);
 
+const ctxVal = {
+    goods,
+    setGoods
+}
     return (
-    <>
+         // value - объект с данными контекста
+          /*
+        * age = 40
+        * {
+        *   name: "Vasya",
+        *   // age: 40
+        *   // age: age
+        *   age
+        * }
+        * */
+        // <Ctx.Provider value={{
+        //     goods: goods,
+        //     setGoods,
+        //     news
+        // }}>
+    <Ctx.Provider value={ctxVal}>
         <Header 
         user={user} 
         setModalActive={setModalActive}
         serverGoods={serverGoods}
         />
             <main>
-                <Search arr={serverGoods} upd={setGoods}/>
+                <Search arr={serverGoods}/>
                 {/* 
            SPA - Single Page Application (одностраничное приложение)   
                 */}
                     <Routes>
                         <Route path="/" element={<Main/>}/>
                         <Route path="/catalog" element={<Catalog 
-                        goods={goods}
-                        //  // Когда мы ставим лайк на товар - его нужно обновить в общем массиве с товарами 
-                        //  (иначе лайк поставится только в карточке, но после изменения страницы (переходе между страницами) 
-                        //  мы его больше не увидим)
                         setServerGoods={setServerGoods}
                         />}/>
                          <Route path="/favorites" element={<Favorites 
@@ -130,7 +160,7 @@ useEffect(() => {
             setActive={setModalActive}
             setUser={setUser}
             />
-        </>
+        </Ctx.Provider>
     )
 }
 
