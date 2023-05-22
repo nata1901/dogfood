@@ -12,6 +12,12 @@
 .card_img {
     height: 100px;
     justify-self: center;
+}.card__img2 {
+    height: 100px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
 }
 .card_btn {
     border: none;

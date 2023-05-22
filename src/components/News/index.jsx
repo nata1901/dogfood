@@ -1,4 +1,7 @@
 import {useState, useEffect, useContext} from "react";
+// import Carousel from "better-react-carousel";
+import Carousel from "@trendyol-js/react-carousel";
+import { ScrollingCarousel } from "@trendyol-js/react-carousel";
 import Ctx from "../../context";
 import "./style.css"
 
@@ -21,8 +24,9 @@ const News = () => {
         setData(news)
     }, [news])
 
-    return <div>
-        <h2>Новости Lenta.ru</h2>
+    return <>
+    <div>
+        <h2>1. Новости Lenta.ru</h2>
         <div className="news-block">
             {data.slice(0, 6).map((el,i) => <img
                 key={i}
@@ -34,6 +38,23 @@ const News = () => {
             />)}
         </div>
     </div>
+    {/* <div>
+    <h2>2. Новости Lenta.ru</h2>
+    <Carousel cols={4} rows={1} gap={10} loop>
+        {news.map((el,i) => <Carousel.Item key={i}>
+        <img src={el.urlToImage} alt={el.title}/>
+        </Carousel.Item>)}
+        </Carousel>
+    </div> */}
+    {/* <div>
+    <h2>3. Новости Lenta.ru</h2>
+    <ScrollingCarousel show={3} slide={3} swiping={true}>
+        {news.map((el,i) => <div>
+        <img src={el.urlToImage} height = "100" alt={el.title} key={i}/>
+        </div>)}
+        </ScrollingCarousel>
+    </div> */}
+    </>
 }
 
 export default News;
