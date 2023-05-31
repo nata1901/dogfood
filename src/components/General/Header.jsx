@@ -1,6 +1,6 @@
 import Logo from "./Logo";
 import { Link, useNavigate } from "react-router-dom";
-import { Folder2, Star, Cart4, PersonSquare, BoxArrowInRight } from "react-bootstrap-icons";
+import { Folder2, Star, Cart4, PersonSquare, BoxArrowInRight, PlusSquare } from "react-bootstrap-icons";
 import { useEffect, useState } from "react";
 
 
@@ -28,6 +28,9 @@ const Header = ({user, setModalActive, serverGoods}) => {
         <nav className="header__menu">
             {/* Если пользователь === true */}
             {user && <>
+                <Link to="/add" title="Добавить товар"  className="badge-el">
+                    <PlusSquare/>
+                </Link>
                 <Link to="/catalog" title="Каталог" className="badge-el">
                 <Folder2/>
                  {/* <span className="badge-item">{serverGoods.length}</span> */}

@@ -47,6 +47,7 @@ import Catalog from "./pages/Catalog";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import Favorites from "./pages/Favorites";
+import Add from "./pages/AddProduct";
 
 
 // TODO: проработать материал с лекции:
@@ -140,9 +141,12 @@ useEffect(() => {
         <Ctx.Provider value={{
             goods: goods,
             setGoods,
+            setServerGoods,
             news,
             text,
-            setText
+            setText,
+            userId,
+            token
         }}>
         <Header 
         user={user} 
@@ -159,6 +163,7 @@ useEffect(() => {
                         <Route path="/catalog" element={<Catalog 
                         setServerGoods={setServerGoods}
                         />}/>
+                        <Route path="/add" element={<Add/>}/>
                          <Route path="/favorites" element={<Favorites 
                         goods={goods}
                         userId={userId}
