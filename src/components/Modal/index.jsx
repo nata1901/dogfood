@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import Ctx from "../../context";
 import "./style.css";
+
 
 const Modal = ({active, setActive, setUser}) => {
     const [auth, setAuth] = useState(true);
@@ -7,6 +10,8 @@ const Modal = ({active, setActive, setUser}) => {
 	const [email, setEmail] = useState("");
 	const [pwd, setPwd] = useState("");
 	const [testPwd, setTestPwd] = useState("");
+
+	const { api } = useContext(Ctx);
 
 	const testAccess = {
 		color: pwd === testPwd ? "forestgreen" : "crimson"
@@ -37,19 +42,8 @@ const Modal = ({active, setActive, setUser}) => {
 			body.name = name;
 			body.group = "group-12";
 		}
-        let log = "https://api.react-learning.ru/signin"; // вход
-		let reg = "https://api.react-learning.ru/signup"; // регистрация
-
-        // Регистрация !== вход (после добавления пользователя в БД, нужно будет повторно войти в аккаунт)
-
-        let res = await fetch(auth ? log : reg, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(body)
-		})
-        let data = await res.json()
+       
+		let data = await (auth ? api.auth(body) : api.reg(body))
 		if (!data.err) {
 			// При регистрации с сервера приходит объект о пользователе {name, email, _id, group}
 			/* при входе с сервера приходит два параметра: 
@@ -60,14 +54,7 @@ const Modal = ({active, setActive, setUser}) => {
             if (!auth) {
 				delete body.name;
 				delete body.group
-				let resLog = await fetch(log, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(body)
-				})
-				let dataLog = await resLog.json()
+				let dataLog = await api.auth(body);
 				if (!dataLog.err) {
 					localStorage.setItem("rockUser", dataLog.data.name);
 					localStorage.setItem("rockToken", dataLog.token);
@@ -95,7 +82,7 @@ const Modal = ({active, setActive, setUser}) => {
 	className="modal-wrapper"
 	style={{display: active ? "flex" : "none"}}
 	>
-        <div className="modal">
+        <div className="my-modal">
             <button onClick={() => setActive(false)}>Закрыть окно</button>
             <h3>Авторизация</h3>
             <form onSubmit={sendForm}>

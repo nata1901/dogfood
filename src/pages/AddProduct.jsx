@@ -1,10 +1,12 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import {Container, Row, Col, Form, Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
+import Ctx from "../context";
 
 const Add = () => {
     const navigate = useNavigate();
+    const {api, setServerGoods} = useContext(Ctx);
     const [description, setDescription] = useState("Тут пока ничего нет...");
     const [discount, setDiscount] = useState(0);
     const [name, setName] = useState("");
@@ -60,24 +62,16 @@ const Add = () => {
             description,
             tags: tag.length && !tags.includes(tag) ? [...tags, tag] : tags
         }
-        fetch("https://api.react-learning.ru/products", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("rockToken")}`
-            },
-            body: JSON.stringify(body)
+        api.addProduct(body)
+        .then(data => {
+            console.log(data)
+            if (!data.err && !data.error) {
+                setServerGoods(prev => [data, ...prev]);
+                clearForm();
+                navigate(`/product/${data._id}`)
+            }
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                if (!data.err && !data.error) {
-                    clearForm();
-                    navigate(`/product/${data._id}`)
-                }
-            })
-    }
-
+}
     return <Container className="bs bg-light text-dark rounded-1 p-4">
         <Row>
             <Col xs={12}>
