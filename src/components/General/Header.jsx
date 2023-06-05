@@ -1,17 +1,28 @@
 import Logo from "./Logo";
 import { Link, useNavigate } from "react-router-dom";
 import { Folder2, Star, Cart4, PersonSquare, BoxArrowInRight, PlusSquare } from "react-bootstrap-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+
+import Ctx from "../../context";
 
 
 const Header = ({user, setModalActive, serverGoods}) => {
     const [likeCnt, setLikeCnt] = useState(0);
     const [cartCnt, setCartCnt] = useState(0);
+    const {basket} = useContext(Ctx);
     useEffect(() => {
         // Фильтруем только те товары, у которых в лайках есть id нашего пользователя - id берем из ls, 
         // ибо мы про него забыли))
         setLikeCnt(serverGoods.filter(el => el.likes.includes(localStorage.getItem("rockId"))).length)
     }, [serverGoods]);
+
+    useEffect(() => {
+        // let cnt = 0;
+        // for (let i = 0; i < basket.length; i++) {
+        //     cnt += basket[i].cnt
+        // }
+        setCartCnt(basket.reduce((acc, el) => acc + el.cnt, 0))
+    }, [basket])
 
     const navigate = useNavigate()
     
@@ -39,7 +50,7 @@ const Header = ({user, setModalActive, serverGoods}) => {
                 <Star/>
                 <span className="badge-item">{likeCnt}</span>
                 </Link>
-                <Link to="/" title="Корзина"className="badge-el">
+                <Link to="/basket" title="Корзина" className="badge-el">
                 <Cart4/>
                 <span className="badge-item">{cartCnt}</span>
                 </Link>

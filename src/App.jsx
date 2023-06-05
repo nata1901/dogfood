@@ -50,6 +50,7 @@ import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import Favorites from "./pages/Favorites";
 import Add from "./pages/AddProduct";
+import Basket from "./pages/Basket";
 
 
 // TODO: проработать материал с лекции:
@@ -75,14 +76,24 @@ const [goods, setGoods] = useState(serverGoods);
 const [news, setNews] = useState([]);
 const [api, setApi] = useState(new Api(token));
 
-useEffect(() => {
-    fetch("https://newsapi.org/v2/everything?q=животные&sources=lenta&apiKey=3c35962d0dfc45689ece68af88f0bba7")
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            setNews(data.articles)
-        })
-}, [])
+//basket from LS=)
+let bStore = localStorage.getItem("rockBasket");
+// if (bStore && bStore[0] === "[" && bStore[bStore.length - 1] === "J") {
+    if (bStore) {
+        bStore = JSON.parse(bStore);
+    } else {
+        bStore = [];
+    }
+const [basket, setBasket] = useState(bStore);
+
+// useEffect(() => {
+//     fetch("https://newsapi.org/v2/everything?q=животные&sources=lenta&apiKey=3c35962d0dfc45689ece68af88f0bba7")
+//         .then(res => res.json())
+//         .then(data => {
+//             console.log(data);
+//             setNews(data.articles)
+//         })
+// }, [])
      
     const [modalActive, setModalActive] = useState(false);
 
@@ -90,6 +101,10 @@ useEffect(() => {
     useEffect(() => {
         setApi(new Api(token));
     }, [token])
+
+    useEffect(() => {
+        localStorage.setItem("rockBasket", JSON.stringify(basket));
+    }, [basket])
 
     useEffect(() => {
         if (api.token) {
@@ -149,7 +164,9 @@ useEffect(() => {
             setText,
             userId,
             token,
-            api
+            api,
+            basket,
+            setBasket
         }}>
         <Header 
         user={user} 
@@ -177,6 +194,7 @@ useEffect(() => {
                              <Profile user={user} setUser={setUser} color="yellow"/>
                         }/>
                         <Route path="/product/:id" element={<Product/>}/>
+                        <Route path="/basket" element={<Basket/>}/>
                     </Routes>
             </main>
             <Footer/>
